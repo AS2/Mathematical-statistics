@@ -5,11 +5,11 @@ from poisson_dist import plot_poisson
 
 SIZES = [10, 100, 1000]
 M = 10.0
-begin = -1.5
+begin = -1.7320508
 length = begin * 2
 
 
-plot_normal(SIZES, "normal nums", "denstiny", "skyblue")
+#plot_normal(SIZES, "normal nums", "denstiny", "skyblue")
 plot_uniform(begin, length, SIZES, "uniform nums", "denstiny", "royalblue")
-plot_cauchy(SIZES, "cauchy nums", "denstiny", "cyan")
-plot_poisson(M, SIZES, "poisson nums", "denstiny", "pink")
+#plot_cauchy(SIZES, "cauchy nums", "denstiny", "cyan")
+#plot_poisson(M, SIZES, "poisson nums", "denstiny", "pink")
