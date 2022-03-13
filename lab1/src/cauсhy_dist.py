@@ -1,6 +1,8 @@
 from scipy.stats import cauchy
 import matplotlib.pyplot as plt
 import numpy as np
+import seaborn as sns
+from statsmodels.distributions.empirical_distribution import ECDF
 
 import utils as u
 
@@ -42,4 +44,58 @@ def print_table_cauchy(sizes : list, repeats : int):
         #print("size: " + str(size))
         print(E)
         print(D)
+    return
+
+def boxplot_Tukey_cauchy(sizes : list, repeats : int):
+    tips, result, count = [], [], 0
+    for size in sizes:
+        for i in range(repeats):
+            distr = cauchy.rvs(size = size)
+            distr.sort()
+            count += u.number_of_emissions(distr)
+        result.append(count/(size * repeats))
+
+        distr = cauchy.rvs(size = size)
+        distr.sort()
+        tips.append(distr)
+    u.draw_boxplot_Tukey(tips, "Cauchy Tukey")
+    u.print_emissions(sizes, result)
+    return
+
+def draw_emp_func_cauchy(sizes : list, left_border : float, right_border : float):
+    sns.set_style('whitegrid')
+    figures, axs = plt.subplots(ncols=3, figsize=(15,5))
+    for size in range(len(sizes)):
+        x = np.linspace(left_border, right_border, 10000)
+        y = cauchy.cdf(x)
+        sample = cauchy.rvs(size = sizes[size])
+        sample.sort()
+        ecdf = ECDF(sample)
+        axs[size].plot(x, y, color='blue', label='cdf')
+        axs[size].plot(x, ecdf(x), color='black', label='ecdf')
+        axs[size].legend(loc='lower right')
+        axs[size].set(xlabel='x', ylabel='$F(x)$')
+        axs[size].set_title("Cauchy" + ' n = ' + str(sizes[size])) 
+    figures.savefig(u.SAVE_PATH + "CauchyEmp.jpg")
+    return
+
+def draw_kde_cauchy(sizes : list, left_border : float, right_border : float, koefs : list):
+    sns.set_style('whitegrid')
+    for size in range(len(sizes)):
+        figures, axs = plt.subplots(ncols=len(koefs), figsize=(15,5))
+        x = np.linspace(left_border, right_border, 10000)
+        for kf in range(len(koefs)):
+            y = cauchy.pdf(x)
+            sample = cauchy.rvs(size = sizes[size])
+            
+            axs[kf].plot(x, y, color='blue', label='pdf')
+            sns.kdeplot(data=sample, bw_method='silverman', bw_adjust = koefs[kf], ax=axs[kf], 
+                        fill=True, common_norm=False, palette="crest", alpha=0, linewidth=2, label='kde')
+            axs[kf].legend(loc='upper right')
+            axs[kf].set(xlabel='x', ylabel='$f(x)$')
+            axs[kf].set_xlim([left_border, right_border])
+            axs[kf].set_title(' h = ' + str(koefs[kf]))
+
+        figures.suptitle('Cauchy KDE n = ' + str(sizes[size]))
+        figures.savefig(u.SAVE_PATH + "Cauchy KDE"+ str(sizes[size])+".jpg")
     return
