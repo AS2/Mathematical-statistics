@@ -42,8 +42,7 @@ def print_table_poisson(mu : float, sizes : list, repeats : int):
             E.append(round(u.mean(column), u.ROUND_SIGNS))
             D.append(round(u.dispersion(column), u.ROUND_SIGNS))
         #print("size: " + str(size))
-        print(E)
-        print(D)
+        u.print_table_rows(E, D, "Poisson E(z) " + str(size), "Poisson D(z) " + str(size))
     return
 
 def boxplot_Tukey_poisson(mu : float, sizes : list, repeats : int):

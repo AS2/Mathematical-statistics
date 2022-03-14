@@ -4,7 +4,7 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 
 SAVE_PATH = "../docs/resources/"
-ROUND_SIGNS = 8
+ROUND_SIGNS = 6
 
 # task 2 utils
 def mean(data):
@@ -38,6 +38,37 @@ def zTR(data):
 
 def dispersion(data):
     return np.std(data) ** 2
+
+def print_table_rows(E, D, E_name, D_name):
+    strTmp = E_name + " & " + str(E[0])
+    for e in range(1, len(E)):
+        strTmp += " & " + str(E[e])
+    strTmp += " \\\\"
+    print(strTmp)
+    print("\\hline")
+
+    strTmp = D_name + " & " + str(D[0])
+    for d in range(1, len(D)):
+        strTmp += " & " + str(D[d])
+    strTmp += " \\\\"
+    print(strTmp)
+    print("\\hline")
+
+    
+
+    strTmp = "E(z) \pm \sqrt{D(z)}"
+    for i in range(len(E)):
+        strTmp += " & [" + str(round(E[i] - m.sqrt(D[i]), ROUND_SIGNS)) + ";"
+    strTmp += " \\\\"
+    print(strTmp)
+
+    strTmp = ""
+    for i in range(len(E)):
+        strTmp += " & " + str(round(E[i] + m.sqrt(D[i]), ROUND_SIGNS)) + "]"
+    strTmp += " \\\\"
+    print(strTmp)
+    print("\\hline")
+    return
 
 # task 3 utils
 def moustaches(data):

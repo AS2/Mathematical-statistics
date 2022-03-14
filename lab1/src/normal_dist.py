@@ -42,8 +42,7 @@ def print_table_normal(sizes : list, repeats : int):
             E.append(round(u.mean(column), u.ROUND_SIGNS))
             D.append(round(u.dispersion(column), u.ROUND_SIGNS))
         #print("size: " + str(size))
-        print(E)
-        print(D)
+        u.print_table_rows(E, D, "Normal E(z) " + str(size), "Normal D(z) " + str(size))
     return
 
 def boxplot_Tukey_normal(sizes : list, repeats : int):

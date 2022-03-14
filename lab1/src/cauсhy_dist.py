@@ -42,8 +42,7 @@ def print_table_cauchy(sizes : list, repeats : int):
             E.append(round(u.mean(column), u.ROUND_SIGNS))
             D.append(round(u.dispersion(column), u.ROUND_SIGNS))
         #print("size: " + str(size))
-        print(E)
-        print(D)
+        u.print_table_rows(E, D, "Cauchy E(z) " + str(size), "Cauchy D(z) " + str(size))
     return
 
 def boxplot_Tukey_cauchy(sizes : list, repeats : int):
