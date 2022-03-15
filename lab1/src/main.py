@@ -14,7 +14,7 @@ length = begin * 2
 #plot_cauchy(SIZES, "cauchy nums", "denstiny", "cyan")
 #plot_poisson(M, SIZES, "poisson nums", "denstiny", "pink")
 
-# Task #2 - build characteristics values of different distributions
+# Task #2 - build characteristiёcs values of different distributions
 repeats = 1000
 print_table_normal(SIZES, repeats)
 print("\n")
