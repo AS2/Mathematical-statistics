@@ -5,7 +5,7 @@ import math as m
 from task1 import count_coefficients, create_table, multivariate_normal, show_ellipse, mix_multivariate_normal
 from task2 import reference_noisy_function, plot_linear_regression
 from task3 import task3Solver
-from task4 import normal, mean, dispersion_exp
+from task4 import normal, mean, dispersion_exp, draw_result, task4, task4_asymp
 
 # TASK 1 CODE
 def task1_builder():
@@ -55,25 +55,12 @@ def task3_builder():
     return
 
 def task4_builder():
-    alpha = 0.05
-    for n in [20, 100]:
-        print("=========%i==========" % n)
-        x = normal(n)
-        m = mean(x)
-        s = np.sqrt(dispersion_exp(x))
-        print("m: %.2f, %.2f" % (
-            m - s*(stats.t.ppf(1-alpha/2, n-1))/np.sqrt(n-1),
-            m + s*(stats.t.ppf(1-alpha/2, n-1))/np.sqrt(n-1)))
-        print("sigma: %.2f, %.2f" % (
-            s*np.sqrt(n)/np.sqrt(stats.chi2.ppf(1-alpha/2, n-1)),
-            s*np.sqrt(n)/np.sqrt(stats.chi2.ppf(alpha/2, n-1))))
-        print("m asymptotic :%.2f, %.2f" % (
-            m - stats.norm.ppf(1-alpha / 2)/np.sqrt(n),
-            m + stats.norm.ppf(1 - alpha / 2)/np.sqrt(n)))
-        e = (sum(list(map(lambda el: (el-m)**4, x)))/n)/s**4 - 3
-        print("sigma asymptotic: %.2f, %.2f" % (
-                s/np.sqrt(1+stats.norm.ppf(1-alpha / 2)*np.sqrt((e+2)/n)),
-                s/np.sqrt(1-stats.norm.ppf(1-alpha / 2)*np.sqrt((e+2)/n))))
+    n_set = [20, 100]
+    x_20 = normal(20)
+    x_100 = normal(100)
+    x_set = [x_20, x_100]
+    task4(x_set, n_set)
+    task4_asymp(x_set, n_set)
     return
 
 #task1_builder()
