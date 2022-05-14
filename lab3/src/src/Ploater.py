@@ -21,7 +21,7 @@ class Plotter:
         plt.xlabel('n')
         plt.ylabel('mV')
         if self.isSave:
-            plt.savefig(savePath + 'input_PR1.png')
+            plt.savefig(self.savePath + 'input_PR1.png')
         if self.isShow:
             plt.show()
         plt.figure()
@@ -32,7 +32,7 @@ class Plotter:
         plt.xlabel('n')
         plt.ylabel('mV')
         if self.isSave:
-            plt.savefig(savePath + 'input_PR2.png')
+            plt.savefig(self.savePath + 'input_PR2.png')
         if self.isShow:
             plt.show()
         plt.figure()
@@ -48,27 +48,33 @@ class Plotter:
         eIntervals = [[d[0] - eps, d[0] + eps] for d in etalonData]
 
         for i in range(len(intervals)):
-            plt.vlines(i + 1, intervals[i][0], intervals[i][1], 'C0', lw=1)
+            if i == 0:
+                plt.vlines(i + 1, intervals[i][0], intervals[i][1], 'C0', lw=1, label = "$I_1$")
+            else:
+                plt.vlines(i + 1, intervals[i][0], intervals[i][1], 'C0', lw=1)
 
         plt.legend()
         plt.title('Ch1 data intervals')
         plt.xlabel('n')
         plt.ylabel('mV')
         if self.isSave:
-            plt.savefig(savePath + 'data_interval.png')
+            plt.savefig(self.savePath + 'intervals_PR1.png')
         if self.isShow:
             plt.show()
         plt.figure()
 
         for i in range(len(eIntervals)):
-            plt.vlines(i + 1, eIntervals[i][0], eIntervals[i][1], 'C1', lw=1)
+            if i == 0:
+                plt.vlines(i + 1, eIntervals[i][0], eIntervals[i][1], 'C1', lw=1, label = "$I_2$")                
+            else:
+                plt.vlines(i + 1, eIntervals[i][0], eIntervals[i][1], 'C1', lw=1)
 
         plt.legend()
         plt.title('Ch2 data intervals')
         plt.xlabel('n')
         plt.ylabel('mV')
         if self.isSave:
-            plt.savefig(savePath + 'etalonData_interval.png')
+            plt.savefig(self.savePath + 'intervals_PR2.png')
         if self.isShow:
             plt.show()
         plt.figure()
@@ -82,29 +88,36 @@ class Plotter:
 
         intervals = [[data[i][0] - eps * w[i], data[i][0] + eps * w[i]] for i in range(len(data))]
         eIntervals = [[eData[i][0] - eps * eW[i], eData[i][0] + eps * eW[i]] for i in range(len(eData))]
-
         for i in range(len(intervals)):
-            plt.vlines(i + 1, intervals[i][0], intervals[i][1], 'C0', lw=1)
+            if i == 0:
+                plt.vlines(i + 1, intervals[i][0], intervals[i][1], 'C0', lw=1, label = "$I_1$")
+            else:
+                plt.vlines(i + 1, intervals[i][0], intervals[i][1], 'C0', lw=1)
+
         plt.plot([1, len(intervals)], [1 * tau[1] + tau[0], len(intervals) * tau[1] + tau[0]], color='green', label = "$Lin_1$")
         plt.legend()
         plt.title('Ch1 data intervals')
         plt.xlabel('n')
         plt.ylabel('mV')
         if self.isSave:
-            plt.savefig(savePath + 'data_interval.png')
+            plt.savefig(self.savePath + 'lr_PR1.png')
         if self.isShow:
             plt.show()
         plt.figure()
 
         for i in range(len(eIntervals)):
-            plt.vlines(i + 1, eIntervals[i][0], eIntervals[i][1], 'C1', lw=1)
+            if i == 0:
+                plt.vlines(i + 1, eIntervals[i][0], eIntervals[i][1], 'C1', lw=1, label = "$I_2$")                
+            else:
+                plt.vlines(i + 1, eIntervals[i][0], eIntervals[i][1], 'C1', lw=1)
+        
         plt.plot([1, len(eIntervals)], [1 * eTau[1] + eTau[0], len(eIntervals) * eTau[1] + eTau[0]], color='green', label = "$Lin_1$")
         plt.legend()
         plt.title('Ch2 data intervals')
         plt.xlabel('n')
         plt.ylabel('mV')
         if self.isSave:
-            plt.savefig(savePath + 'etalonData_interval.png')
+            plt.savefig(self.savePath + 'lr_PR2.png')
         if self.isShow:
             plt.show()
         plt.figure()
@@ -117,21 +130,21 @@ class Plotter:
             return
 
         #plot histogram
-        plt.hist(w, label="$w_1$")
+        plt.hist(w, bins=10, label="$w_1$", color='C0')
         plt.legend()
         plt.title('$w_1$ histogram')
         if self.isSave:
-            plt.savefig(savePath + 'w1_hist.png')
+            plt.savefig(self.savePath + 'whyst_PR1.png')
         if self.isShow:
             plt.show()
         plt.figure()
     
         #plot histogram
-        plt.hist(eW, label="$w_2$")
+        plt.hist(eW, bins=10, label="$w_2$", color='C1')
         plt.legend()
         plt.title('$w_2$ histogram')
         if self.isSave:
-            plt.savefig(savePath + 'w2_hist.png')
+            plt.savefig(self.savePath + 'whyst_PR2.png')
         if self.isShow:
             plt.show()
         plt.figure()
@@ -157,7 +170,7 @@ class Plotter:
         plt.xlabel('n')
         plt.ylabel('mV')
         if self.isSave:
-            plt.savefig(savePath + 'data1_const.png')
+            plt.savefig(self.savePath + 'fixed_PR1.png')
         if self.isShow:
             plt.show()
         plt.figure()
@@ -170,7 +183,7 @@ class Plotter:
         plt.xlabel('n')
         plt.ylabel('mV')
         if self.isSave:
-            plt.savefig(savePath + 'data2_const.png')
+            plt.savefig(self.savePath + 'fixed_PR2.png')
         if self.isShow:
             plt.show()
         plt.figure()
@@ -184,7 +197,7 @@ class Plotter:
         hist = [(t[1] + t[0]) / 2 for t in x]
         cur_value = 0
 
-        plt.hist(hist, color = color, label = label1, rwidth=0.8)
+        plt.hist(hist, color = color, label = label1)
         return
 
     def plotFixedHyst(self, data : list, tau : list, w : list, eData : list, eTau : list, eW : list, eps : float):
@@ -202,7 +215,7 @@ class Plotter:
         plt.legend()
         plt.title('$I_1^c$ histogram')
         if self.isSave:
-            plt.savefig(savePath + 'data1_hist_const.png')
+            plt.savefig(self.savePath + 'fhyst_PR1.png')
         if self.isShow:
             plt.show()
         plt.figure()
@@ -211,7 +224,7 @@ class Plotter:
         plt.legend()
         plt.title('$I_2^c$ histogram')
         if self.isSave:
-            plt.savefig(savePath + 'data2_hist_const.png')
+            plt.savefig(self.savePath + 'fhyst_PR2.png')
         if self.isShow:
             plt.show()
         plt.figure()
@@ -229,8 +242,7 @@ class Plotter:
         dataFixed = [[intervals[i][0] - tau[1] * (i + 1), intervals[i][1]  - tau[1] * (i + 1)] for i in range(len(data))]
         eDataFixed = [[eIntervals[i][0] - eTau[1] * (i + 1), eIntervals[i][1]  - eTau[1] * (i + 1)] for i in range(len(data))]
 
-        intervalR = [0.001 * i + 1 for i in range(300)]
-        #intervalR = [0.0001 * i + 1 for i in range(20000)]
+        intervalR = [0.0001 * i + 1 for i in range(10000)]
         jaccarsAll = []
 
         def countJakkar(R):
@@ -253,19 +265,19 @@ class Plotter:
         print(optimal_x[0]) 
 
         min1 = opt.root(countJakkar, 1)
-        max1 = opt.root(countJakkar, 2)
+        max1 = opt.root(countJakkar, 1.2)
         print(min1.x, max1.x)
 
         plt.plot(intervalR, jaccarsAll, label="Jaccard", zorder=1)
         plt.scatter(optimal_x[0], countJakkar(optimal_x[0]), label="optimal point at R=" + str(optimal_x[0]))
-        plt.scatter(min1.x, countJakkar(min1.x), label="$min_R$=" + str(min1.x[0])[0:7], color="r", zorder=2)
-        plt.scatter(max1.x, countJakkar(max1.x), label="$max_R$=" + str(max1.x[0])[0:7], color="r", zorder=2)
+        plt.scatter(min1.x, countJakkar(min1.x), label="$min_R$=" + str(min1.x[0]), color="r", zorder=2)
+        plt.scatter(max1.x, countJakkar(max1.x), label="$max_R$=" + str(max1.x[0]), color="r", zorder=2)
         plt.legend()
         plt.xlabel('$R_{21}$')
         plt.ylabel('Jaccard')
         plt.title('Jaccard vs R')
         if self.isSave:
-            plt.savefig(savePath + 'jakkar.png')
+            plt.savefig(self.savePath + 'jakkar.png')
         if self.isShow:
             plt.show()
         plt.figure()
@@ -289,7 +301,7 @@ class Plotter:
         plt.legend()
         plt.title('Histogram of combined data with optimal R21')
         if self.isSave:
-            plt.savefig(savePath + 'jakkar_combined_hist.png')
+            plt.savefig(self.savePath + 'jakkar_combined_hist.png')
         if self.isShow:
             plt.show()
         plt.figure()

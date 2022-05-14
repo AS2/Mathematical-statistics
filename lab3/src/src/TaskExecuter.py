@@ -42,12 +42,12 @@ class TaskExecuter:
     def plotGraphs(self):
         plotter = pltr.Plotter(self.isShow, self.isSave, self.savePath)
 
-        # plotter.plotInputDatas(self.data, self.etalonData)
-        # plotter.plotIntervals(self.data, self.etalonData, self.eps)
-        # plotter.plotLinearRegression(self.data, self.tau, self.w, self.etalonData, self.etalonTau, self.etalonW, self.eps)
-        # plotter.plotHystW(self.w, self.etalonW)
-        # plotter.plotFixedIntervals(self.data, self.tau, self.w, self.etalonData, self.etalonTau, self.etalonW, self.eps)
-        # plotter.plotFixedHyst(self.data, self.tau, self.w, self.etalonData, self.etalonTau, self.etalonW, self.eps)
+        plotter.plotInputDatas(self.data, self.etalonData)
+        plotter.plotIntervals(self.data, self.etalonData, self.eps)
+        plotter.plotLinearRegression(self.data, self.tau, self.w, self.etalonData, self.etalonTau, self.etalonW, self.eps)
+        plotter.plotHystW(self.w, self.etalonW)
+        plotter.plotFixedIntervals(self.data, self.tau, self.w, self.etalonData, self.etalonTau, self.etalonW, self.eps)
+        plotter.plotFixedHyst(self.data, self.tau, self.w, self.etalonData, self.etalonTau, self.etalonW, self.eps)
         optimal_x = plotter.plotJacard(self.data, self.tau, self.w, self.etalonData, self.etalonTau, self.etalonW, self.eps)
         plotter.plotJacardHyst(self.data, self.tau, self.w, self.etalonData, self.etalonTau, self.etalonW, self.eps, optimal_x)
         return
