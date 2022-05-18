@@ -242,7 +242,8 @@ class Plotter:
         dataFixed = [[intervals[i][0] - tau[1] * (i + 1), intervals[i][1]  - tau[1] * (i + 1)] for i in range(len(data))]
         eDataFixed = [[eIntervals[i][0] - eTau[1] * (i + 1), eIntervals[i][1]  - eTau[1] * (i + 1)] for i in range(len(data))]
 
-        intervalR = [0.0001 * i + 1 for i in range(10000)]
+        #intervalR = [0.000000003125 * i + 1.091266 for i in range(800)]
+        intervalR = [0.0000003 * i + 1 for i in range(1000000)]
         jaccarsAll = []
 
         def countJakkar(R):
@@ -261,11 +262,12 @@ class Plotter:
         for r in intervalR:
             jaccarsAll.append(countJakkar(r))
         
-        optimal_x = opt.fmin(lambda x: -countJakkar(x), 0)
-        print(optimal_x[0]) 
+        optimal_x = opt.fmin(lambda x: -countJakkar(x), 1.0912670309)
+        print(optimal_x[0])
+        print(countJakkar(optimal_x[0]))
 
-        min1 = opt.root(countJakkar, 1)
-        max1 = opt.root(countJakkar, 1.2)
+        max1 = opt.root(countJakkar, 1.085)
+        min1 = opt.root(countJakkar, 1.093)
         print(min1.x, max1.x)
 
         plt.plot(intervalR, jaccarsAll, label="Jaccard", zorder=1)
@@ -273,6 +275,7 @@ class Plotter:
         plt.scatter(min1.x, countJakkar(min1.x), label="$min_R$=" + str(min1.x[0]), color="r", zorder=2)
         plt.scatter(max1.x, countJakkar(max1.x), label="$max_R$=" + str(max1.x[0]), color="r", zorder=2)
         plt.legend()
+        plt.grid()
         plt.xlabel('$R_{21}$')
         plt.ylabel('Jaccard')
         plt.title('Jaccard vs R')
